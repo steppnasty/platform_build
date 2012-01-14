@@ -24,7 +24,6 @@ PRODUCT_PACKAGES := \
     AlarmProvider \
     Bluetooth \
     Calculator \
-    Calendar \
     CertInstaller \
     DrmProvider \
     Email \

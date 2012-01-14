@@ -18,8 +18,6 @@ endif
 # src:dest pair is the first one to match the same dest"
 #$(1): the src:dest pair
 define check-product-copy-files
-$(if $(filter %.apk, $(1)),$(error \
-    Prebuilt apk found in PRODUCT_COPY_FILES: $(1), use BUILD_PREBUILT instead!))
 endef
 unique_product_copy_files_destinations :=
 $(foreach cf,$(PRODUCT_COPY_FILES), \
@@ -1212,8 +1210,10 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(OTATOOLS)
 	   --override_device=$(override_device) \
            $(BUILT_TARGET_FILES_PACKAGE) $@
 
-.PHONY: otapackage
+.PHONY: otapackage aospX
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
+aospX: otapackage
+	$(hide) ./vendor/aospX/tools/squisher
 
 # -----------------------------------------------------------------
 # The update package
