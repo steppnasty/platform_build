@@ -1211,10 +1211,10 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(OTATOOLS)
 	   --override_device=$(override_device) \
            $(BUILT_TARGET_FILES_PACKAGE) $@
 
-.PHONY: otapackage aospX
+.PHONY: otapackage aospx
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
-aospX: otapackage
-	$(hide) ./vendor/aospX/tools/squisher
+aospx: otapackage
+	$(hide) ./vendor/aospx/tools/squisher
 
 # -----------------------------------------------------------------
 # The update package
