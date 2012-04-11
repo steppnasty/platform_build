@@ -54,6 +54,9 @@ Usage:  ota_from_target_files [flags] input_target_files output_ota_package
 
   --override_device <device>
       Override device-specific asserts. Can be a comma-separated list.
+  -S  (--file_context) <file>
+      the file contexts configuration used to assign SELinux file
+      context attributes
 
 """
 
@@ -92,6 +95,7 @@ OPTIONS.extra_script = None
 OPTIONS.aslr_mode = True
 OPTIONS.worker_threads = 3
 OPTIONS.override_device = 'auto'
+OPTIONS.selinux_fc = None
 
 def MostPopularKey(d, default):
   """Given a dict, return the key corresponding to the largest
@@ -392,6 +396,9 @@ def WriteFullOTAPackage(input_zip, output_zip):
   if OPTIONS.wipe_user_data:
     script.FormatPartition("/data")
 
+  if OPTIONS.selinux_fc is not None:
+    WritePolicyConfig(OPTIONS.selinux_fc, output_zip)
+
   script.FormatPartition("/system")
   script.Mount("/system")
   script.UnpackPackageDir("system", "/system")
@@ -428,14 +435,16 @@ def WriteFullOTAPackage(input_zip, output_zip):
   script.AddToZip(input_zip, output_zip)
   WriteMetadata(metadata, output_zip)
 
+def WritePolicyConfig(file_context, output_zip):
+  f = open(file_context, 'r');
+  basename = os.path.basename(file_context)
+  common.ZipWriteStr(output_zip, basename, f.read())
+
 
 def WriteMetadata(metadata, output_zip):
   common.ZipWriteStr(output_zip, "META-INF/com/android/metadata",
                      "".join(["%s=%s\n" % kv
                               for kv in sorted(metadata.iteritems())]))
-
-
-
 
 def LoadSystemFiles(z):
   """Load all the files from SYSTEM/... in a given target-files
@@ -749,12 +758,14 @@ def main(argv):
       OPTIONS.worker_threads = int(a)
     elif o in ("--override_device"):
       OPTIONS.override_device = a
+    elif o in ("-S", "--file_context"):
+      OPTIONS.selinux_fc = a
     else:
       return False
     return True
 
   args = common.ParseOptions(argv, __doc__,
-                             extra_opts="b:k:i:d:wne:a:",
+                             extra_opts="b:k:i:d:wne:a:S:",
                              extra_long_opts=["board_config=",
                                               "package_key=",
                                               "incremental_from=",
@@ -763,7 +774,9 @@ def main(argv):
                                               "extra_script=",
                                               "worker_threads=",
                                               "aslr_mode=",
-                                              "override_device="],
+                                              "override_device=",
+                                              "file_context=",
+                                              ],
                              extra_option_handler=option_handler)
 
   if len(args) != 2:
