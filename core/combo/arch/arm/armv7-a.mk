@@ -29,7 +29,7 @@ endif
 # we include our own cross compiler, but it makes it easier to
 # maintain when we change the compiler.
 
-mcpu-arg = $(shell sed 's/^-mcpu=//' <<< $(call cc-option,-mcpu=$(1),-mcpu=$(2)))
+mcpu-arg = $(shell sed 's/^-mcpu=//' <<< "$(call cc-option,-mcpu=$(1),-mcpu=$(2))")
 
 ifeq ($(strip $(TARGET_ARCH_VARIANT_CPU)),cortex-a15)
 	TARGET_ARCH_VARIANT_CPU := $(call mcpu-arg,cortex-a15,cortex-a9)
