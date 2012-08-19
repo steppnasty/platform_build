@@ -20,7 +20,7 @@ PRODUCT_NAME := core
 
 PRODUCT_PROPERTY_OVERRIDES := \
     ro.config.notification_sound=OnTheHunt.ogg \
-    ro.config.alarm_alert=Alarm_Classic.ogg
+    ro.config.alarm_alert=Cesium.ogg
 
 PRODUCT_PACKAGES := \
     ApplicationsProvider \
