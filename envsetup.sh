@@ -10,6 +10,7 @@ Invoke ". build/envsetup.sh" from your shell to add the following functions to y
 - jgrep:   Greps on all local Java files.
 - resgrep: Greps on all local res/*.xml files.
 - godir:   Go to the directory containing a file.
+- aospremote: Add git remote for matching AOSP repository
 
 Look at the source to view more functions. The complete list is:
 EOF
@@ -1064,6 +1065,24 @@ function repodiff() {
     diffopts=$* repo forall -c \
       'echo "$REPO_PATH ($REPO_REMOTE)"; git diff ${diffopts} 2>/dev/null ;'
 }
+
+function aospremote()
+{
+    git remote rm aosp 2> /dev/null
+    if [ ! -d .git ]
+    then
+        echo ".git directory not found. Please run this from the root directory of the Android repository you wish to set up."
+    fi
+    PROJECT=`pwd | sed s#$ANDROID_BUILD_TOP/##g`
+    if (echo $PROJECT | grep -qv "^device")
+    then
+        PFX="platform/"
+    fi
+    git remote add aosp https://android.googlesource.com/$PFX$PROJECT
+    git fetch aosp
+    echo "Remote 'aosp' created"
+}
+export -f aospremote
 
 # Force JAVA_HOME to point to java 1.6 if it isn't already set
 function set_java_home() {
