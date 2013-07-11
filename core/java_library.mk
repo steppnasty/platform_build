@@ -14,8 +14,10 @@ ifneq (,$(LOCAL_ASSET_DIR))
 $(error $(LOCAL_PATH): Target java libraries may not set LOCAL_ASSET_DIR)
 endif
 
+ifneq (true,$(LOCAL_IS_STATIC_JAVA_LIBRARY))
 ifneq (,$(LOCAL_RESOURCE_DIR))
 $(error $(LOCAL_PATH): Target java libraries may not set LOCAL_RESOURCE_DIR)
+endif
 endif
 
 #xxx base_rules.mk looks at this
@@ -65,6 +67,7 @@ $(common_javalib.jar) : $(built_dex) $(java_resource_sources) | $(AAPT)
 	@echo "target Jar: $(PRIVATE_MODULE) ($@)"
 	$(create-empty-package)
 	$(add-dex-to-package)
+	$(add-carried-java-resources)
 ifneq ($(extra_jar_args),)
 	$(add-java-resources-to-package)
 endif
