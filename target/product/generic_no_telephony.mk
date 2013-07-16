@@ -25,6 +25,7 @@ PRODUCT_PACKAGES := \
     Calculator \
     CertInstaller \
     DrmProvider \
+    FusedLocation \
     Gallery2 \
     LatinIME \
     Launcher2 \
@@ -52,9 +53,10 @@ PRODUCT_PACKAGES += \
     libvideoeditorplayer \
     libvideoeditor_core
 
-PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES +=       \
     audio.primary.default \
-    audio_policy.default
+    audio_policy.default  \
+    power.default
 
 PRODUCT_COPY_FILES := \
         system/bluetooth/data/audio.conf:system/etc/bluetooth/audio.conf \

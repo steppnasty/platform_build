@@ -23,6 +23,7 @@ PRODUCT_PACKAGES := \
 	DeskClock \
 	Email \
 	Exchange \
+        FusedLocation \
 	Gallery \
 	Music \
 	Mms \
