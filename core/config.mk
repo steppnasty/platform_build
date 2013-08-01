@@ -34,9 +34,10 @@ SRC_HEADERS := \
 	$(TOPDIR)hardware/libhardware_legacy/include \
 	$(TOPDIR)hardware/ril/include \
 	$(TOPDIR)dalvik/libnativehelper/include \
+	$(TOPDIR)frameworks/native/include \
 	$(TOPDIR)frameworks/base/include \
 	$(TOPDIR)frameworks/base/opengl/include \
-    $(TOPDIR)frameworks/base/native/include \
+	$(TOPDIR)frameworks/base/native/include \
 	$(TOPDIR)external/skia/include
 SRC_HOST_HEADERS:=$(TOPDIR)tools/include
 SRC_LIBRARIES:= $(TOPDIR)libs
