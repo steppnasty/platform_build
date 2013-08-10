@@ -167,7 +167,7 @@ endif # unbundled_goals
 ifeq ($(HOST_OS),linux)
 # ... or if the if the option is already set
 ifeq ($(WITH_HOST_DALVIK),)
-  WITH_HOST_DALVIK := true
+  WITH_HOST_DALVIK := false
 endif
 endif
 

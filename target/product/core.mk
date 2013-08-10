@@ -78,6 +78,7 @@ PRODUCT_PACKAGES := \
     libgabi++ \
     libicui18n \
     libicuuc \
+    libjavacore \
     libnativehelper \
     libnfc_ndef \
     libpowermanager \
@@ -111,8 +112,11 @@ ifeq ($(WITH_HOST_DALVIK),true)
         apache-xml-hostdex \
         bouncycastle-hostdex \
         core-hostdex \
+	libjavacore \
         dalvik \
         zoneinfo-host.dat \
         zoneinfo-host.idx \
         zoneinfo-host.version
 endif
+
+$(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)

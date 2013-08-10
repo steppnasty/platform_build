@@ -5,8 +5,11 @@
 
 # Make sure there's something to build.
 # It's possible to build a package that doesn't contain any classes.
-ifeq (,$(strip $(LOCAL_SRC_FILES)$(all_res_assets)))
-$(error $(LOCAL_PATH): Target java module does not define any source or resource files)
+# LOCAL_SOURCE_FILES_ALL_GENERATED is set only if the module does not have static source files,
+# but generated source files in its LOCAL_INTERMEDIATE_SOURCE_DIR.
+# You have to set up the dependency in some other way.
+ifeq (,$(strip $(LOCAL_SRC_FILES)$(all_res_assets)$(LOCAL_STATIC_JAVA_LIBRARIES))$(filter true,$(LOCAL_SOURCE_FILES_ALL_GENERATED)))
+$(warning $(LOCAL_PATH): Target java module does not define any source or resource files)
 endif
 
 LOCAL_NO_STANDARD_LIBRARIES:=$(strip $(LOCAL_NO_STANDARD_LIBRARIES))
