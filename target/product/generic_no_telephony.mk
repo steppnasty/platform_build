@@ -56,7 +56,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES +=       \
     audio.primary.default \
     audio_policy.default  \
-    power.default
+    power.default         \
+    libnetcmdiface
 
 PRODUCT_COPY_FILES := \
         system/bluetooth/data/audio.conf:system/etc/bluetooth/audio.conf \

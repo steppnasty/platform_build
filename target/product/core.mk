@@ -106,6 +106,9 @@ PRODUCT_PACKAGES := \
     zoneinfo.idx \
     zoneinfo.version
 
+PRODUCT_COPY_FILES += \
+    system/core/rootdir/init.trace.rc:root/init.trace.rc \
+
 # host-only dependencies
 ifeq ($(WITH_HOST_DALVIK),true)
     PRODUCT_PACKAGES += \
