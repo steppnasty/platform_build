@@ -99,7 +99,7 @@ PRODUCT_PACKAGES := \
     libz \
     screencap \
     sensorservice \
-    telephony=common \
+    telephony-common \
     mms-common \
     drmserver \
     libdrmframework \
