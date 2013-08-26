@@ -99,6 +99,8 @@ PRODUCT_PACKAGES := \
     libz \
     screencap \
     sensorservice \
+    telephony=common \
+    mms-common \
     drmserver \
     libdrmframework \
     libdrmframework_jni \
