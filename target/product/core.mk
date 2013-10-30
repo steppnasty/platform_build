@@ -67,6 +67,8 @@ PRODUCT_PACKAGES := \
     ip-up-vpn \
     ip6tables \
     iptables \
+    keystore \
+    keystore.default \
     libOpenMAXAL \
     libOpenSLES \
     libaudiopreprocessing \
@@ -79,6 +81,7 @@ PRODUCT_PACKAGES := \
     libicui18n \
     libicuuc \
     libjavacore \
+    libkeystore \
     libnativehelper \
     libnfc_ndef \
     libpowermanager \
@@ -122,6 +125,15 @@ ifeq ($(WITH_HOST_DALVIK),true)
         zoneinfo-host.dat \
         zoneinfo-host.idx \
         zoneinfo-host.version
+endif
+
+ifeq ($(HAVE_SELINUX),true)
+    PRODUCT_PACKAGES += \
+        sepolicy \
+        file_contexts \
+        seapp_contexts \
+        property_contexts \
+        mac_permissions.xml
 endif
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
