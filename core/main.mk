@@ -204,6 +204,8 @@ $(info ***************************************************************)
 $(error stopping)
 endif
 
+TARGET_BUILD_JAVA_SUPPORT_LEVEL := platform
+
 ###
 ### In this section we set up the things that are different
 ### between the build variants
