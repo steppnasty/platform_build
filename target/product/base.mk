@@ -232,7 +232,6 @@ PRODUCT_PACKAGES += \
 	libGLES_android \
 	libGLESv1_CM \
 	libGLESv2 \
-	libglib \
 	libgui \
 	libhardware \
 	libhardware_legacy \
