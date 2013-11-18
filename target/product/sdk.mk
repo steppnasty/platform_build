@@ -61,7 +61,8 @@ PRODUCT_PACKAGES := \
 	ConnectivityTest \
 	GpsLocationTest \
 	CalendarProvider \
-	Calendar
+	Calendar \
+	LegacyCamera
 
 # Define the host tools and libs that are parts of the SDK.
 include sdk/build/product_sdk.mk
@@ -70,7 +71,8 @@ include development/build/product_sdk.mk
 # audio libraries.
 PRODUCT_PACKAGES += \
 	audio.primary.goldfish \
-	audio_policy.default
+	audio_policy.default \
+        local_time.default
 
 PRODUCT_PACKAGE_OVERLAYS := development/sdk_overlay
 

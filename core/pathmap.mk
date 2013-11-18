@@ -50,6 +50,8 @@ pathmap_INCL := \
     mkbootimg:system/core/mkbootimg \
     recovery:bootable/recovery \
     system-core:system/core/include \
+    audio-effects:system/media/audio_effects/include \
+    audio-utils:system/media/audio_utils/include \
     wilhelm:system/media/wilhelm/include \
     wilhelm-ut:system/media/wilhelm/src/ut \
     speex:external/speex/include
