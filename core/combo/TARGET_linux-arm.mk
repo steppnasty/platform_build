@@ -246,7 +246,7 @@ endif
 
 define transform-o-to-shared-lib-inner
 $(hide) $(PRIVATE_CXX) \
-	-nostdlib -Wl,-soname,$(notdir $@) -Wl,-T,$(BUILD_SYSTEM)/armelf.xsc \
+	-nostdlib -Wl,-soname,$(notdir $@) \
 	-Wl,--gc-sections \
 	-Wl,-shared,-Bsymbolic \
 	$(PRIVATE_TARGET_GLOBAL_LD_DIRS) \
