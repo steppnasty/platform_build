@@ -1238,9 +1238,9 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(OTATOOLS) $(SELI
 	   --override_device=$(override_device) \
 	   $(BUILT_TARGET_FILES_PACKAGE) $@
 
-.PHONY: otapackage aospx
+.PHONY: otapackage aospsx
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
-aospx: otapackage
+aospsx: otapackage
 	$(hide) ./vendor/aospx/tools/squisher
 
 # -----------------------------------------------------------------
