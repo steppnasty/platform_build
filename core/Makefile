@@ -1241,7 +1241,7 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(OTATOOLS) $(SELI
 .PHONY: otapackage aospsx
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
 aospsx: otapackage
-	$(hide) ./vendor/aospx/tools/squisher
+	$(hide) ./vendor/aospsx/tools/squisher
 
 # -----------------------------------------------------------------
 # The update package
