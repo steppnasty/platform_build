@@ -36,7 +36,7 @@ SRC_HEADERS := \
 	$(TOPDIR)libnativehelper/include \
 	$(TOPDIR)frameworks/native/include \
 	$(TOPDIR)frameworks/base/include \
-	$(TOPDIR)frameworks/base/opengl/include \
+	$(TOPDIR)frameworks/native/opengl/include \
         $(TOPDIR)frameworks/av/include \
 	$(TOPDIR)frameworks/base/native/include \
 	$(TOPDIR)external/skia/include
