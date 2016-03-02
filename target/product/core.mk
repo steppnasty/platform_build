@@ -88,15 +88,23 @@ PRODUCT_PACKAGES := \
     libspeexresampler \
     libsqlite_jni \
     libssl \
+    libstagefright \
+    libstagefright_chromium_http \
+    libstagefright_soft_aacdec \
+    libstagefright_soft_aacenc \
+    libstagefright_soft_amrdec \
+    libstagefright_soft_amrnbenc \
+    libstagefright_soft_amrwbenc \
+    libstagefright_soft_flacenc \
+    libstagefright_soft_g711dec \
     libstagefright_soft_h264dec \
     libstagefright_soft_h264enc \
-    libstagefright_soft_aacdec \
-    libstagefright_soft_amrdec \
-    libstagefright_soft_g711dec \
     libstagefright_soft_mp3dec \
     libstagefright_soft_mpeg4dec \
+    libstagefright_soft_mpeg4enc \
     libstagefright_soft_vorbisdec \
     libstagefright_soft_vpxdec \
+    libstagefright_soft_rawdec \
     libvariablespeed \
     libwebrtc_audio_preprocessing \
     libwilhelm \
