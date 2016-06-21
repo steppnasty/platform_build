@@ -27,10 +27,8 @@
 # A mapping from shorthand names to include directories.
 #
 pathmap_INCL := \
-    bluedroid:system/bluetooth/bluedroid/include \
-    bluez:external/bluetooth/bluez \
-    glib:external/bluetooth/glib \
     bootloader:bootable/bootloader/legacy/include \
+    camera:system/media/camera/include \
     corecg:external/skia/include/core \
     dbus:external/dbus \
     frameworks-base:frameworks/base/include \
@@ -48,12 +46,13 @@ pathmap_INCL := \
     libstdc++:bionic/libstdc++/include \
     libthread_db:bionic/libthread_db/include \
     mkbootimg:system/core/mkbootimg \
+    opengl-tests-includes:frameworks/native/opengl/tests/include \
     recovery:bootable/recovery \
     system-core:system/core/include \
     audio-effects:system/media/audio_effects/include \
     audio-utils:system/media/audio_utils/include \
-    wilhelm:system/media/wilhelm/include \
-    wilhelm-ut:system/media/wilhelm/src/ut \
+    wilhelm:frameworks/wilhelm/include \
+    wilhelm-ut:frameworks/wilhelm/src/ut \
     speex:external/speex/include
 
 #
@@ -88,6 +87,9 @@ FRAMEWORKS_BASE_SUBDIRS := \
 	    graphics \
 	    location \
 	    media \
+	    media/mca/effect \
+	    media/mca/filterfw \
+	    media/mca/filterpacks \
 	    drm \
 	    opengl \
 	    sax \

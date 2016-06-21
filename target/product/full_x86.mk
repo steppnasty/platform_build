@@ -23,9 +23,6 @@
 # that isn't a wifi connection. This will instruct init.rc to enable the
 # network connection so that you can use it with ADB
 
-PRODUCT_PACKAGES := \
-    Camera
-
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/board/generic_x86/device.mk)
 

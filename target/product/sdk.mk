@@ -19,11 +19,10 @@ PRODUCT_PROPERTY_OVERRIDES :=
 
 PRODUCT_PACKAGES := \
 	Calculator \
-	Camera \
 	DeskClock \
-	Email \
-	Exchange \
-        FusedLocation \
+	Email2 \
+	Exchange2 \
+	FusedLocation \
 	Gallery \
 	Music \
 	Mms \
@@ -38,12 +37,14 @@ PRODUCT_PACKAGES := \
 	SystemUI \
 	Launcher2 \
 	Development \
+	DevelopmentSettings \
 	DrmProvider \
 	Fallback \
 	Settings \
 	SdkSetup \
 	CustomLocale \
 	sqlite3 \
+	InputDevices \
 	LatinIME \
 	CertInstaller \
 	LiveWallpapersPicker \
@@ -62,29 +63,36 @@ PRODUCT_PACKAGES := \
 	GpsLocationTest \
 	CalendarProvider \
 	Calendar \
+	SmokeTest \
+	SmokeTestApp \
+	rild \
 	LegacyCamera
 
+
 # Define the host tools and libs that are parts of the SDK.
-include sdk/build/product_sdk.mk
-include development/build/product_sdk.mk
+-include sdk/build/product_sdk.mk
+-include development/build/product_sdk.mk
 
 # audio libraries.
 PRODUCT_PACKAGES += \
 	audio.primary.goldfish \
 	audio_policy.default \
-        local_time.default
+	local_time.default
 
 PRODUCT_PACKAGE_OVERLAYS := development/sdk_overlay
 
 PRODUCT_COPY_FILES := \
+	device/generic/goldfish/data/etc/apns-conf.xml:system/etc/apns-conf.xml \
 	system/core/rootdir/etc/vold.fstab:system/etc/vold.fstab \
 	frameworks/base/data/sounds/effects/camera_click.ogg:system/media/audio/ui/camera_click.ogg \
 	frameworks/base/data/sounds/effects/VideoRecord.ogg:system/media/audio/ui/VideoRecord.ogg \
-	frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
-	frameworks/base/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
-	frameworks/base/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
-        frameworks/base/media/libeffects/data/audio_effects.conf:system/etc/audio_effects.conf \
-        hardware/libhardware_legacy/audio/audio_policy.conf:system/etc/audio_policy.conf
+	frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
+	development/tools/emulator/system/camera/media_profiles.xml:system/etc/media_profiles.xml \
+	development/tools/emulator/system/camera/media_codecs.xml:system/etc/media_codecs.xml \
+	frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
+	frameworks/native/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
+	frameworks/av/media/libeffects/data/audio_effects.conf:system/etc/audio_effects.conf \
+	hardware/libhardware_legacy/audio/audio_policy.conf:system/etc/audio_policy.conf
 
 $(call inherit-product-if-exists, frameworks/base/data/fonts/fonts.mk)
 $(call inherit-product-if-exists, frameworks/base/data/keyboards/keyboards.mk)

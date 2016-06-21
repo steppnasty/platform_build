@@ -63,9 +63,18 @@ endif
 
 ifneq ($(LOCAL_IS_HOST_MODULE),true)
 
-ifeq ($(LOCAL_JAVA_LIBRARIES),)
-LOCAL_JAVA_LIBRARIES := core ext framework
-endif
+ifneq ($(LOCAL_SDK_VERSION),)
+  ifeq ($(LOCAL_SDK_VERSION)$(TARGET_BUILD_APPS),current)
+    # Use android_stubs_current if LOCAL_SDK_VERSION is current and no TARGET_BUILD_APPS.
+    LOCAL_JAVA_LIBRARIES := android_stubs_current $(LOCAL_JAVA_LIBRARIES)
+  else
+    LOCAL_JAVA_LIBRARIES := sdk_v$(LOCAL_SDK_VERSION) $(LOCAL_JAVA_LIBRARIES)
+  endif
+else
+  LOCAL_JAVA_LIBRARIES := core ext framework $(LOCAL_JAVA_LIBRARIES)
+endif  # LOCAL_SDK_VERSION
+LOCAL_JAVA_LIBRARIES := $(sort $(LOCAL_JAVA_LIBRARIES))
+
 full_java_libs := $(call java-lib-files,$(LOCAL_JAVA_LIBRARIES),$(LOCAL_IS_HOST_MODULE))
 full_java_lib_deps := $(call java-lib-deps,$(LOCAL_JAVA_LIBRARIES),$(LOCAL_IS_HOST_MODULE))
 
@@ -138,6 +147,11 @@ $(full_target): PRIVATE_DROIDDOC_HTML_DIR := -htmldir $(LOCAL_PATH)/$(LOCAL_DROI
 else
 $(full_target): PRIVATE_DROIDDOC_HTML_DIR := 
 endif
+ifneq ($(strip $(LOCAL_ADDITIONAL_HTML_DIR)),)
+$(full_target): PRIVATE_ADDITIONAL_HTML_DIR := -htmldir2 $(LOCAL_PATH)/$(LOCAL_ADDITIONAL_HTML_DIR)
+else
+$(full_target): PRIVATE_ADDITIONAL_HTML_DIR :=
+endif
 
 # TODO: not clear if this is used any more
 $(full_target): PRIVATE_LOCAL_PATH := $(LOCAL_PATH)
@@ -159,6 +173,7 @@ $(full_target): $(full_src_files) $(droiddoc_templates) $(droiddoc) $(html_dir_f
                 -docletpath $(PRIVATE_DOCLETPATH) \
                 -templatedir $(PRIVATE_CUSTOM_TEMPLATE_DIR) \
                 $(PRIVATE_DROIDDOC_HTML_DIR) \
+                $(PRIVATE_ADDITIONAL_HTML_DIR) \
                 $(addprefix -bootclasspath ,$(PRIVATE_BOOTCLASSPATH)) \
                 $(addprefix -classpath ,$(PRIVATE_CLASSPATH)) \
                 -sourcepath $(PRIVATE_SOURCE_PATH)$(addprefix :,$(PRIVATE_CLASSPATH)) \

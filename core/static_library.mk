@@ -14,6 +14,9 @@ ifeq ($(strip $(LOCAL_MODULE_SUFFIX)),)
 LOCAL_MODULE_SUFFIX := .a
 endif
 LOCAL_UNINSTALLABLE_MODULE := true
+ifneq ($(strip $(LOCAL_MODULE_STEM)$(LOCAL_BUILT_MODULE_STEM)),)
+$(error $(LOCAL_PATH): Cannot set module stem for a library)
+endif
 
 ####################################################
 ## Add profiling libraries if aprof is turned

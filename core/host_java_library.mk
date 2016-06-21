@@ -52,6 +52,7 @@ $(LOCAL_INTERMEDIATE_TARGETS): \
 $(cleantarget): PRIVATE_CLEAN_FILES += $(intermediates.COMMON)
 
 $(full_classes_compiled_jar): PRIVATE_JAVACFLAGS := $(LOCAL_JAVACFLAGS)
+$(full_classes_compiled_jar): PRIVATE_JAR_EXCLUDE_FILES :=
 $(full_classes_compiled_jar): $(java_sources) $(java_resource_sources) $(full_java_lib_deps) $(jar_manifest_file)
 	$(transform-host-java-to-package)
 
@@ -81,12 +82,14 @@ $(LOCAL_BUILT_MODULE): $(built_dex) $(java_resource_sources) | $(AAPT)
 	@echo "Host Jar: $(PRIVATE_MODULE) ($@)"
 	$(create-empty-package)
 	$(add-dex-to-package)
+	$(add-carried-java-resources)
 ifneq ($(extra_jar_args),)
 	$(add-java-resources-to-package)
 endif
 
 else
 $(LOCAL_BUILT_MODULE): PRIVATE_JAVACFLAGS := $(LOCAL_JAVACFLAGS)
+$(LOCAL_BUILT_MODULE): PRIVATE_JAR_EXCLUDE_FILES :=
 $(LOCAL_BUILT_MODULE): $(java_sources) $(java_resource_sources) $(full_java_lib_deps) $(jar_manifest_file)
 	$(transform-host-java-to-package)
 endif  # LOCAL_BUILD_HOST_DEX

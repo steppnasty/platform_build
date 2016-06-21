@@ -20,11 +20,12 @@ PRODUCT_NAME := core
 
 PRODUCT_PROPERTY_OVERRIDES := \
     ro.config.notification_sound=OnTheHunt.ogg \
-    ro.config.alarm_alert=Cesium.ogg
+    ro.config.alarm_alert=Alarm_Classic.ogg
 
-PRODUCT_PACKAGES := \
+PRODUCT_PACKAGES += \
     ApplicationsProvider \
     BackupRestoreConfirmation \
+    BasicDreams \
     Browser \
     Contacts \
     ContactsProvider \
@@ -42,7 +43,9 @@ PRODUCT_PACKAGES := \
     TelephonyProvider \
     UserDictionaryProvider \
     VpnDialogs \
+    abcc \
     apache-xml \
+    atrace \
     bouncycastle \
     bu \
     cacerts \
@@ -56,9 +59,9 @@ PRODUCT_PACKAGES := \
     dexlist \
     dexopt \
     dmtracedump \
+    drmserver \
     dx \
     ext \
-    filterfw \
     framework-res \
     hprof-conv \
     icu.dat \
@@ -69,11 +72,17 @@ PRODUCT_PACKAGES := \
     iptables \
     keystore \
     keystore.default \
+    libandroidfw \
     libOpenMAXAL \
     libOpenSLES \
     libaudiopreprocessing \
+    libaudioutils \
+    libbcc \
     libcrypto \
+    libdownmix \
     libdvm \
+    libdrmframework \
+    libdrmframework_jni \
     libexpat \
     libfilterfw \
     libfilterpack_imageproc \
@@ -82,8 +91,10 @@ PRODUCT_PACKAGES := \
     libicuuc \
     libjavacore \
     libkeystore \
+    libmdnssd \
     libnativehelper \
     libnfc_ndef \
+    libportable \
     libpowermanager \
     libspeexresampler \
     libsqlite_jni \
@@ -109,18 +120,21 @@ PRODUCT_PACKAGES := \
     libwebrtc_audio_preprocessing \
     libwilhelm \
     libz \
+    make_ext4fs \
+    mdnsd \
+    requestsync \
     screencap \
     sensorservice \
+    lint \
+    uiautomator \
     telephony-common \
     mms-common \
-    drmserver \
-    libdrmframework \
-    libdrmframework_jni \
     zoneinfo.dat \
     zoneinfo.idx \
     zoneinfo.version
 
 PRODUCT_COPY_FILES += \
+    system/core/rootdir/init.usb.rc:root/init.usb.rc \
     system/core/rootdir/init.trace.rc:root/init.trace.rc \
 
 # host-only dependencies
@@ -129,7 +143,13 @@ ifeq ($(WITH_HOST_DALVIK),true)
         apache-xml-hostdex \
         bouncycastle-hostdex \
         core-hostdex \
-	libjavacore \
+        libcrypto \
+        libexpat \
+        libicui18n \
+        libicuuc \
+        libjavacore \
+        libssl \
+        libz-host \
         dalvik \
         zoneinfo-host.dat \
         zoneinfo-host.idx \
@@ -146,3 +166,4 @@ ifeq ($(HAVE_SELINUX),true)
 endif
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
+

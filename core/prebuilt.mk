@@ -27,6 +27,21 @@ ifeq (SHARED_LIBRARIES,$(LOCAL_MODULE_CLASS))
   OVERRIDE_BUILT_MODULE_PATH := $($(my_prefix)OUT_INTERMEDIATE_LIBRARIES)
 endif
 
+# Deal with the OSX library timestamp issue when installing
+# a prebuilt simulator library.
+ifneq ($(filter STATIC_LIBRARIES SHARED_LIBRARIES,$(LOCAL_MODULE_CLASS)),)
+  prebuilt_module_is_a_library := true
+else
+  prebuilt_module_is_a_library :=
+endif
+
+# Don't install static libraries by default.
+ifndef LOCAL_UNINSTALLABLE_MODULE
+ifeq (STATIC_LIBRARIES,$(LOCAL_MODULE_CLASS))
+  LOCAL_UNINSTALLABLE_MODULE := true
+endif
+endif
+
 ifeq ($(LOCAL_STRIP_MODULE),true)
   ifdef LOCAL_IS_HOST_MODULE
     $(error Cannot strip host module LOCAL_PATH=$(LOCAL_PATH))
@@ -42,14 +57,15 @@ ifeq ($(LOCAL_STRIP_MODULE),true)
 else
   include $(BUILD_SYSTEM)/base_rules.mk
   built_module := $(LOCAL_BUILT_MODULE)
-endif
 
-# Deal with the OSX library timestamp issue when installing
-# a prebuilt simulator library.
-ifneq ($(filter STATIC_LIBRARIES SHARED_LIBRARIES,$(LOCAL_MODULE_CLASS)),)
-  prebuilt_module_is_a_library := true
-else
-  prebuilt_module_is_a_library :=
+ifdef prebuilt_module_is_a_library
+# Create a dummy export_includes.
+$(intermediates)/export_includes:
+	$(hide) mkdir -p $(dir $@) && rm -f $@
+	$(hide) touch $@
+
+$(LOCAL_BUILT_MODULE) : | $(intermediates)/export_includes
+endif
 endif
 
 PACKAGES.$(LOCAL_MODULE).OVERRIDES := $(strip $(LOCAL_OVERRIDES_PACKAGES))
@@ -115,6 +131,13 @@ $(built_module) : $(LOCAL_PATH)/$(LOCAL_SRC_FILES)
 else
 $(built_module) : $(LOCAL_PATH)/$(LOCAL_SRC_FILES) | $(ACP)
 	$(transform-prebuilt-to-target)
+ifneq ($(prebuilt_module_is_a_library),)
+  ifneq ($(LOCAL_IS_HOST_MODULE),)
+	$(transform-host-ranlib-copy-hack)
+  else
+	$(transform-ranlib-copy-hack)
+  endif
+endif
 endif
 endif
 
@@ -135,11 +158,3 @@ $(common_javalib_jar) : $(common_classes_jar) | $(ACP)
 # make sure the classes.jar and javalib.jar are built before $(LOCAL_BUILT_MODULE)
 $(built_module) : $(common_javalib_jar)
 endif # TARGET JAVA_LIBRARIES
-
-ifneq ($(prebuilt_module_is_a_library),)
-  ifneq ($(LOCAL_IS_HOST_MODULE),)
-	$(transform-host-ranlib-copy-hack)
-  else
-	$(transform-ranlib-copy-hack)
-  endif
-endif

@@ -167,7 +167,7 @@ endif # unbundled_goals
 ifeq ($(HOST_OS),linux)
 # ... or if the if the option is already set
 ifeq ($(WITH_HOST_DALVIK),)
-  WITH_HOST_DALVIK := false
+  WITH_HOST_DALVIK := true
 endif
 endif
 
@@ -220,7 +220,7 @@ $(call import-products, $(all_product_makefiles))
 else
 # Import just the current product.
 ifndef current_product_makefile
-$(error Can not locate config makefile for product "$(TARGET_PRODUCT)")
+$(error Cannot locate config makefile for product "$(TARGET_PRODUCT)")
 endif
 ifneq (1,$(words $(current_product_makefile)))
 $(error Product "$(TARGET_PRODUCT)" ambiguous: matches $(current_product_makefile))
@@ -320,11 +320,12 @@ ifneq (1,$(words $(PRODUCT_DEFAULT_DEV_CERTIFICATE)))
 endif
 endif
 
-# A list of words like <source path>:<destination path>.  The file at
-# the source path should be copied to the destination path when building
-# this product.  <destination path> is relative to $(PRODUCT_OUT), so
-# it should look like, e.g., "system/etc/file.xml".  The rules
-# for these copy steps are defined in config/Makefile.
+# A list of words like <source path>:<destination path>[:<owner>].
+# The file at the source path should be copied to the destination path
+# when building  this product.  <destination path> is relative to
+# $(PRODUCT_OUT), so it should look like, e.g., "system/etc/file.xml".
+# The rules for these copy steps are defined in build/core/Makefile.
+# The optional :<owner> is used to indicate the owner of a vendor file.
 PRODUCT_COPY_FILES := \
     $(strip $(PRODUCTS.$(INTERNAL_PRODUCT).PRODUCT_COPY_FILES))
 
@@ -350,6 +351,10 @@ DEVICE_PACKAGE_OVERLAYS := \
 
 # An list of whitespace-separated words.
 PRODUCT_TAGS := $(strip $(PRODUCTS.$(INTERNAL_PRODUCT).PRODUCT_TAGS))
+
+# The list of product-specific kernel header dirs
+PRODUCT_VENDOR_KERNEL_HEADERS := \
+    $(PRODUCTS.$(INTERNAL_PRODUCT).PRODUCT_VENDOR_KERNEL_HEADERS)
 
 # Add the product-defined properties to the build properties.
 ADDITIONAL_BUILD_PROPERTIES := \

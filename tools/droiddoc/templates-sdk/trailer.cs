@@ -1,11 +1,20 @@
 </div> <!-- end body-content --> <?cs # normally opened by header.cs ?>
 
+<?cs if:carousel ?>
 <script type="text/javascript">
-init(); /* initialize android-developer-docs.js */
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+$('.slideshow-container').dacSlideshow({
+    btnPrev: '.slideshow-prev',
+    btnNext: '.slideshow-next',
+    btnPause: '#pauseButton'
+});
 </script>
+<?cs /if ?>
+<?cs if:tabbedList ?>
 <script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-5831155-1");
-pageTracker._trackPageview();
+$(".feed").dacTabbedList({
+    nav_id: '.feed-nav',
+    frame_id: '.feed-frame'
+});
 </script>
+<?cs /if ?>
+

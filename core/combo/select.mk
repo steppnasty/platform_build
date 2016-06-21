@@ -47,8 +47,8 @@ $(combo_target)HAVE_STRLCAT := 0
 $(combo_target)HAVE_KERNEL_MODULES := 0
 
 $(combo_target)GLOBAL_CFLAGS := -fno-exceptions -Wno-multichar
-$(combo_target)RELEASE_CFLAGS := -O3 -g -fno-strict-aliasing
-$(combo_target)GLOBAL_LDFLAGS := -Wl,-O2
+$(combo_target)RELEASE_CFLAGS := -O2 -g -fno-strict-aliasing
+$(combo_target)GLOBAL_LDFLAGS :=
 $(combo_target)GLOBAL_ARFLAGS := crsP
 
 $(combo_target)EXECUTABLE_SUFFIX :=
@@ -83,11 +83,7 @@ ifneq ($(USE_CCACHE),)
   ifeq ($(HOST_OS)-$(BUILD_OS),windows-linux)
     CCACHE_HOST_TAG := linux-$(BUILD_ARCH)
   endif
-  ifneq ($(CUSTOM_CCACHE_PATH),)
-    ccache := $(CUSTOM_CCACHE_PATH)/ccache
-  else
-    ccache := prebuilt/$(CCACHE_HOST_TAG)/ccache/ccache
-  endif
+  ccache := prebuilts/misc/$(CCACHE_HOST_TAG)/ccache/ccache
   # Check that the executable is here.
   ccache := $(strip $(wildcard $(ccache)))
   ifdef ccache

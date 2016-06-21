@@ -21,7 +21,11 @@
 # included before TARGET_CC is set, but we may want to use cc-option and
 # friends in the same file that sets TARGET_CC...
 
-LINARO_CC := $(TARGET_TOOLS_PREFIX)gcc$(HOST_EXECUTABLE_SUFFIX)
+ifeq ($(strip $(TARGET_TOOLS_PREFIX)),)
+LINARO_COMPILERCHECK_CC := prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-4.6/bin/arm-linux-androideabi-gcc$(HOST_EXECUTABLE_SUFFIX)
+else
+LINARO_COMPILERCHECK_CC := $(TARGET_TOOLS_PREFIX)gcc$(HOST_EXECUTABLE_SUFFIX)
+endif
 
 try-run = $(shell set -e; \
 	if ($(1)) >/dev/null 2>&1; then \
@@ -31,9 +35,9 @@ try-run = $(shell set -e; \
 	fi)
 
 cc-version = $(shell echo '__GNUC__ __GNUC_MINOR__' \
-	|$(LINARO_CC) -E -xc - |tail -n1 |sed -e 's, ,,g')
+	|$(LINARO_COMPILERCHECK_CC) -E -xc - |tail -n1 |sed -e 's, ,,g')
 
 cc-ifversion = $(shell [ $(call cc-version) $(1) $(2) ] && echo $(3))
 
 cc-option = $(call try-run, echo -e "$(1)" \
-	|$(LINARO_CC) $(1) -c -xc /dev/null -o /dev/null,$(1),$(2))
+	|$(LINARO_COMPILERCHECK_CC) $(1) -c -xc /dev/null -o /dev/null,$(1),$(2))
